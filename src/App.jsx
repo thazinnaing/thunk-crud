@@ -1,22 +1,25 @@
 import ProductsList from "./components/productsList";
-import { addProducts } from "../actions/Actions";
-import { useEffect } from "react";
+import { addingProductsAction } from "./actions/Actions";
 import axios from "axios";
+import { useEffect } from "react";
 
 const PRODUCTS_URL = "https://api.escuelajs.co/api/v1/products";
 
 const App=()=>{
 
   const fetchProducts=()=>{
-    return async(dispatch)=>{
-        const products=await axios.get(PRODUCTS_URL);
-        console.log("products data", products.data);
-        dispatch(addProducts(products.data));
+    console.log("llllll")
+    return function(dispatch){
+      console.log(".......")
+        axios.get(PRODUCTS_URL)
+        .then(res=>
+          dispatch(addingProductsAction(res.data)))
+        
     }
   }
 
   useEffect(()=>{
-      fetchProducts
+      fetchProducts();
   },[])
 
   return(
